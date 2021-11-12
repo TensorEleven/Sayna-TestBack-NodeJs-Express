@@ -29,7 +29,6 @@ app.use(express.static('views'))
 app.use(express.json())
 app.use('/',router)
 
-
 //run server
 app.listen(port,()=>{
     console.log("server started on port "+port)
