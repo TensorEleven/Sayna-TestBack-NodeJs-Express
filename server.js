@@ -9,10 +9,9 @@ const mongoose = require('mongoose');
 // Connecting to mongodb database
 mongoose.connect('mongodb+srv://dbUser:temporarydbusers@cluster0.gb7ps.mongodb.net/test', {
     useNewUrlParser : true,
-    useUnifiedTopology : true,
-    useCreateIndex: true
+    useUnifiedTopology : true
 }).then(()=>{
-    console.log('db connected')
+    console.log('connected to database')
 }).catch((err)=>{
     console.log(err)
 })
