@@ -12,9 +12,11 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^10.0.0",
+    "email-validator": "^2.0.4",
     "express": "^4.17.1",
     "mongoose": "^6.0.12",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
