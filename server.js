@@ -7,7 +7,9 @@ const path = require ('path')
 const mongoose = require('mongoose');
 
 // Connecting to mongodb database
-mongoose.connect('mongodb+srv://dbUser:temporarydbusers@cluster0.gb7ps.mongodb.net/test', {
+
+//mongoose.connect(process.env.URI, {
+mongoose.connect(process.env.DATABASE_LOCAL, {
     useNewUrlParser : true,
     useUnifiedTopology : true
 }).then(()=>{

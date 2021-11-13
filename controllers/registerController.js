@@ -1,23 +1,49 @@
 const user = require('../models/userModel')
 const validator = require ('email-validator')
+//const Cryptr = require ('cryptr')
+const dotenv = require ('dotenv')
+const bcrypt = require ('bcrypt')
+const jwt = require ('jsonwebtoken')
+
+
+//secret config for cryptr
+dotenv.config({path : './config.env'});
+
+//package for encription and descryption
+//setting up pencryption secret world
+//let cryptr = new Cryptr(process.env.ENCRYPTION_SECRET)
 
 class registerController{
+    static async createUserJwt(req,res){
+
+        const newUser = new user
+
+        newUser.firstname = req.body.firstname 
+        newUser.lastname = req.body.lastname
+        newUser.email = req.body.email
+        newUser.dateDeNaissaonce = req.body.dateDeNaissance
+        newUser.sexe = req.body.sexe 
+
+        const hashedPassword = await bcrypt.hash(req.body.password, 10)
+        
+        newUser.create({user: newUser, password: hashedPassword})
+        
+        res.status(201).json(newUser)
+
+        console.log(newUser)
+    }
     static async createUser (req,res){
         let newUser = new user
         newUser.firstname = req.body.firstname 
         newUser.lastname = req.body.lastname
         newUser.email = req.body.email
-        newUser.dateDeNaissaonce = req.body.dateDeNaissaonce
+        newUser.dateDeNaissaonce = req.body.dateDeNaissance
         newUser.sexe = req.body.sexe 
-
-        //encrypted password
-        newUser.password = req.body.password
-
-        //generate tokens
-        newUser.tokens.createdAt = Date.now()
-        newUser.tokens.token ='thisvdknlvznisatoken'
-        newUser.tokens.refreshToken ='refreashfrefrech'
-
+        
+        //PASSSWORD
+        newUser.password = await bcrypt.hash(req.body.password, 10)
+        
+        //MAIL CHECK
         //check required field
         if(!(newUser.email&&newUser.password)){
             res.json({
@@ -38,17 +64,28 @@ class registerController{
             if(result){
                 res.json({
                     error:true,
-                    message:'votre mail n\'est pas correcte'
+                    message:'Le mail est déjà enregistré'
                 })
             }
             else{
+                const tokenTMP = jwt.sign({firstname:newUser.firstname,email:newUser.email}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "2h"})
+                const refreshToken = jwt.sign({firstname:newUser.firstname,email:newUser.email}, process.env.REFRESH_TOKEN_SECRET, {expiresIn: "15m"})
+
+        //TOKEN
+        newUser.tokens.token = tokenTMP
+        newUser.tokens.refreshToken = refreshToken
+        newUser.tokens.createdAt = Date.now()
                 newUser.save((err,u)=>{
                     //console.log(u)
                     if (err) res.send(err)
                     res.json({
                         error : false,
                         message : 'L\'utilisateur a bien été créé avec succés',
-                        tokens : u.tokens
+                        tokens : {
+                            token : u.tokens.token,
+                            refreshToken : u.tokens.refreshToken,
+                            createdAt : u.tokens.createdAt
+                        }
                     })
                 })
             }
