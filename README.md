@@ -32,6 +32,7 @@ $ npm start
 
 ### Login
 To autheticate user on login, use POST method at '/login'
+To log a user in, data needed are email and password
 
 #### if user is checked, API will return : 
 -> status : 200 
@@ -56,4 +57,29 @@ To autheticate user on login, use POST method at '/login'
 -> status : 409,
 -> message : "beaucoup de tentative"
 
+### if email or pawword is misssing 
+-> status : 401
+-> res { <br>
+  error : true, <br>
+  message : "Email ou mots de passe erroné"
+}
 
+## REGISTER
+To register a user, 
+Obligatory data are email and password
+Optional data are :
+firstname,
+lastname,
+birthdate
+
+Register a user with POST method at '/register'
+
+### if the new user is saved correctly 
+-> res {
+  error : false,
+  message : 'utilisateur crée avec succes',
+  tokens :{
+    token : XXXX,
+    refreshtoken XXXX
+  }
+}
