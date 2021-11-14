@@ -39,18 +39,18 @@ To log a user in, data needed are email and password
 -> res : {
   error:false,
   mesage:"L'utilisateur a été authenfifier",
-  tokens:{
-    token : XXXX,
-    refreshToken : XXX
-    createdAt: XXXXX
+  tokens:{ <br>
+&nbsp;&nbsp;token : XXXX,<br>
+&nbsp;&nbsp;refreshToken : XXX <br>
+&nbsp;&nbsp;createdAt: XXXXX <br>
     }
 }
 
 #### if any data is missing
 -> status 401
--> res{
-  error : true,
-  message : "L'email/password manquant"
+-> res{ <br>
+&nbsp;&nbsp;  error : true,<br>
+&nbsp;&nbsp;  message : "L'email/password manquant" <br>
 }
 
 ### if too many attempt
@@ -75,11 +75,11 @@ birthdate
 Register a user with POST method at '/register'
 
 ### if the new user is saved correctly 
--> res {
-  error : false,
-  message : 'utilisateur crée avec succes',
-  tokens :{
-    token : XXXX,
-    refreshtoken XXXX
-  }
+-> res { <br>
+&nbsp;&nbsp;  error : false, <br>
+&nbsp;&nbsp;  message : 'utilisateur crée avec succes', <br>
+&nbsp;&nbsp;  tokens :{ <br>
+&nbsp;&nbsp;    token : XXXX,<br>
+&nbsp;&nbsp;    refreshtoken XXXX <br>
+&nbsp;&nbsp;  } <br>
 }
