@@ -24,7 +24,7 @@ class registerController{
         newUser.sexe = req.body.sexe 
         
         //PASSSWORD
-        newUser.password = await bcrypt.hash(req.body.password, 10)
+        newUser.password = await bcrypt.hash(req.body.password,10)
         
         //MAIL CHECK
         //check required field

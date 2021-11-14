@@ -5,10 +5,7 @@ let userScheme = new mongoose.Schema({
     firstname : String,
     lastname : String,
     email : String,
-    password : {
-        type : String,
-        select : false
-    },
+    password : String,
     dateDeNaissance: Date,
     sexe: String,
     tokens : {

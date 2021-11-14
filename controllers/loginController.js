@@ -1,23 +1,25 @@
 const user = require ('../models/userModel')
 const jwt = require ('jsonwebtoken')
-
+const bcrypt = require ('bcrypt')
 class loginController{
     static async login (req, res){
         // Our login logic starts here
         try {
           // Get user input
-          const { email, password } = req.body;
+          let { email, password } = req.body;
       
           // Validate user input
           if (!(email && password)){
-            res.status(400).status().send("Un ou polusieur champ obligatoire non rempli");
+            res.status(400).status().send("Email/password manquante");
           }
           // Validate if user exist in our database
-          const newUser = await user.findOne({ email });
-      
-          if (newUser && (await bcrypt.compare(password, newUser.password))){
+          let newUser = await user.findOne({ email });
+          console.log(newUser)
+          
+
+          if (newUser && (await bcrypt.compare(password,newUser.password))){
             // user
-            res.status(201).json({
+            res.status(200).json({
               error : false,
               message : 'Utilisateur authentifié',
               tokens : {
@@ -27,7 +29,12 @@ class loginController{
               }
           })
           }
-          res.status(400).send("Mots de passe ou email invalid");
+          else {
+            res.status(400).json({
+            error : true,
+            message :"Votre mail ou mots de passe est erroné"
+          })
+        }
 
         }catch (err) {
           console.log(err);
