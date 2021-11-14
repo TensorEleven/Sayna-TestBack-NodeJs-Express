@@ -14,24 +14,7 @@ dotenv.config({path : './config.env'});
 //let cryptr = new Cryptr(process.env.ENCRYPTION_SECRET)
 
 class registerController{
-    static async createUserJwt(req,res){
-
-        const newUser = new user
-
-        newUser.firstname = req.body.firstname 
-        newUser.lastname = req.body.lastname
-        newUser.email = req.body.email
-        newUser.dateDeNaissaonce = req.body.dateDeNaissance
-        newUser.sexe = req.body.sexe 
-
-        const hashedPassword = await bcrypt.hash(req.body.password, 10)
-        
-        newUser.create({user: newUser, password: hashedPassword})
-        
-        res.status(201).json(newUser)
-
-        console.log(newUser)
-    }
+    
     static async createUser (req,res){
         let newUser = new user
         newUser.firstname = req.body.firstname 
@@ -46,7 +29,7 @@ class registerController{
         //MAIL CHECK
         //check required field
         if(!(newUser.email&&newUser.password)){
-            res.json({
+            res.status(401).json({
                 error:true,
                 message:'l\'une ou plusieur donnée obligatoire sont manquante'
             })
@@ -54,7 +37,7 @@ class registerController{
 
         //check valid info
         else if(!validator.validate(newUser.email)){
-            res.json({
+            res.status(401).json({
                 error:true,
                 message:'l\'un des données n\'est pas conforme'
             })
@@ -62,14 +45,14 @@ class registerController{
         else {
             let result = await user.findOne({email:newUser.email})
             if(result){
-                res.json({
+                res.status(401).json({
                     error:true,
                     message:'Le mail est déjà enregistré'
                 })
             }
             else{
-                const tokenTMP = jwt.sign({firstname:newUser.firstname,email:newUser.email}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "2h"})
-                const refreshToken = jwt.sign({firstname:newUser.firstname,email:newUser.email}, process.env.REFRESH_TOKEN_SECRET, {expiresIn: "15m"})
+                const tokenTMP = jwt.sign({email:newUser.email,password:newUser.password}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "2h"})
+                const refreshToken = jwt.sign({email:newUser.email,password:newUser.password}, process.env.REFRESH_TOKEN_SECRET, {expiresIn: "15m"})
 
         //TOKEN
         newUser.tokens.token = tokenTMP
@@ -78,7 +61,7 @@ class registerController{
                 newUser.save((err,u)=>{
                     //console.log(u)
                     if (err) res.send(err)
-                    res.json({
+                    res.status(201).json({
                         error : false,
                         message : 'L\'utilisateur a bien été créé avec succés',
                         tokens : {

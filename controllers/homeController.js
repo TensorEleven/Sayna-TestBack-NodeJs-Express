@@ -1,6 +1,6 @@
 class homeController{
     static getHome (req,res){
-        res.sendFile('index.html')
+        res.status(200).sendFile('index.html')
     }
 }
 

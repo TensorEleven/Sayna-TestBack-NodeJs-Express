@@ -1,7 +1,6 @@
 class notFoundController {
     static getNotFound(req,res){
-        console.log('page requested not found')
-        res.sendFile('notfound.html', { root: './views' })
+        res.status(404).sendFile('notfound.html', { root: './views' })
     }
 }
 
