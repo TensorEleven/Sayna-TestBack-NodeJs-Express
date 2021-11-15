@@ -61,7 +61,7 @@ To log a user in, data needed are email and password
 -> status : 401
 -> res { <br>
 &nbsp;&nbsp;error : true, <br>
-&nbsp;&nbsp;message : "Email ou mots de passe erroné"
+&nbsp;&nbsp;message : "Email ou mots de passe erroné" <br>
 }
 
 ## REGISTER
