@@ -13,20 +13,20 @@ If fail return notfound.html page with 404 error
 
 ## HOW TO RUN THE SERVER
 ### Create config.env file in root 
-URI = mongodb+srv://<db_name>:<db_password>@cluster link
-DATABASE_LOCAL = mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false
-PORT = XXXX
-ENCRYPTION_SECRET = XXXXX
-ACCESS_TOKEN_SECRET = XXXXX
-REFRESH_TOKEN_SECRET = XXXXX
+URI = mongodb+srv://<db_name>:<db_password>@<cluster> <br>
+DATABASE_LOCAL = mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false <br>
+PORT = XXXX <br>
+ENCRYPTION_SECRET = XXXXX <br>
+ACCESS_TOKEN_SECRET = XXXXX <br>
+REFRESH_TOKEN_SECRET = XXXXX <br>
 
 ### Setup dependencies
 got to api directory and run in a terminale
-$ npm install -i
+&nbsp;&nbsp;$ npm install -i
 
 ### Run the project
 run the project with cli command
-$ npm start
+&nbsp;&nbsp;$ npm start
 
 ---------------------------------
 
@@ -43,7 +43,7 @@ To log a user in, data needed are email and password
 &nbsp;&nbsp;token : XXXX,<br>
 &nbsp;&nbsp;refreshToken : XXX <br>
 &nbsp;&nbsp;createdAt: XXXXX <br>
-    }
+&nbsp;&nbsp;}
 }
 
 #### if any data is missing
@@ -54,14 +54,14 @@ To log a user in, data needed are email and password
 }
 
 ### if too many attempt
--> status : 409,
+-> status : 409,<br>
 -> message : "beaucoup de tentative"
 
 ### if email or pawword is misssing 
 -> status : 401
 -> res { <br>
-  error : true, <br>
-  message : "Email ou mots de passe erroné"
+&nbsp;&nbsp;error : true, <br>
+&nbsp;&nbsp;message : "Email ou mots de passe erroné"
 }
 
 ## REGISTER
